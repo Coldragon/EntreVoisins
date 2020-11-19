@@ -1,5 +1,6 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -29,6 +30,8 @@ public class ViewNeighbourActivity extends AppCompatActivity {
 	TextView mTextViewSocial;
 	@BindView(R.id.view_about_me_content)
 	TextView mTextViewAboutMeContent;
+	@BindView(R.id.neighbour_add_fav)
+	FloatingActionButton mFloatingActionButtonAddFavorite;
 
 	Neighbour mNeighbour;
 
@@ -39,7 +42,7 @@ public class ViewNeighbourActivity extends AppCompatActivity {
 			getSupportActionBar().hide();
 		setContentView(R.layout.activity_view_neighbour);
 		ButterKnife.bind(this);
-		mNeighbour = (Neighbour) getIntent().getSerializableExtra("Neighbour");
+		mNeighbour = (Neighbour) getIntent().getParcelableExtra("Neighbour");
 
 		Glide.with(this)
 				.load(mNeighbour.getAvatarUrl())
@@ -51,6 +54,10 @@ public class ViewNeighbourActivity extends AppCompatActivity {
 		mTextViewPhone.setText(mNeighbour.getPhoneNumber());
 		mTextViewSocial.setText(mNeighbour.getAvatarUrl());
 		mTextViewAboutMeContent.setText(mNeighbour.getAboutMe());
+
+		mFloatingActionButtonAddFavorite.setOnClickListener(v -> {
+			
+		});
 
 	}
 }

@@ -51,7 +51,6 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             Context context = v.getContext();
             Intent viewNeighbour = new Intent(context, ViewNeighbourActivity.class);
             viewNeighbour.putExtra("Neighbour", neighbour);
-            Toast.makeText(context, neighbour.getName(), Toast.LENGTH_SHORT).show();
             context.startActivity(viewNeighbour);
         });
 
@@ -79,6 +78,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+
         }
     }
 }

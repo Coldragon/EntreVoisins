@@ -1,269 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="@color/bg_neighbour_view"
+    android:fillViewport="true"
     tools:context=".ui.neighbour_list.ViewNeighbourActivity">
 
-    <android.support.v4.widget.NestedScrollView
-        android:background="#E4E3E3"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content">
 
-        <android.support.constraint.ConstraintLayout
+        <ImageView
+            android:id="@+id/view_neighbour_avatar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="273dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
 
+        <TextView
+            android:id="@+id/view_neighbour_name1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="20dp"
+            android:shadowColor="#333333"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="10"
+            android:text="Name"
+            android:textColor="@android:color/white"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/view_neighbour_avatar"
+            app:layout_constraintStart_toStartOf="@+id/view_neighbour_avatar" />
 
-            <ImageView
-                android:id="@+id/view_neighbour_avatar"
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/neighbour_add_fav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="245dp"
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="@color/light_gray"
+            app:borderWidth="1dp"
+            app:elevation="22dp"
+            app:layout_constraintBottom_toBottomOf="@+id/view_neighbour_avatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.107"
+            app:srcCompat="@drawable/ic_star_fav" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="10dp"
+            android:padding="32sp"
+            app:cardElevation="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_neighbour_avatar"
+            app:cardCornerRadius="7dp"
+            >
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="273dp"
-                android:scaleType="centerCrop"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
+                android:layout_height="match_parent"
+                android:layout_margin="16sp"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/view_neighbour_name1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="20dp"
-                android:text="Name"
-                android:textColor="#FFFFFF"
-                android:textSize="36sp"
-                android:textStyle="bold"
-                android:shadowColor="#333333"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="10"
-                app:layout_constraintBottom_toBottomOf="@+id/view_neighbour_avatar"
-                app:layout_constraintStart_toStartOf="@+id/view_neighbour_avatar" />
-
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/neighbour_add_fav"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="245dp"
-                android:layout_marginEnd="16dp"
-                android:backgroundTint="#F4F4F4"
-                android:clickable="true"
-                android:elevation="50dp"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="2"
-                app:borderWidth="1dp"
-                app:elevation="200dp"
-                app:layout_constraintBottom_toBottomOf="@+id/view_neighbour_avatar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.107"
-                app:srcCompat="@drawable/ic_star_fav"
-                />
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/cardView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="10dp"
-                android:padding="32sp"
-                app:cardElevation="15dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view_neighbour_avatar">
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/view_neighbour_name2"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="16sp"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:text="Name"
+                    android:textColor="@color/neigh_title"
+                    android:textSize="30sp"/>
 
-                    <TextView
-                        android:id="@+id/view_neighbour_name2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Name"
-                        android:textColor="#000000"
-                        android:textSize="30sp"
-                        android:textStyle="bold"
-                        tools:layout_conversion_absoluteHeight="40dp"
-                        tools:layout_conversion_absoluteWidth="392dp"
-                        tools:layout_editor_absoluteX="10dp"
-                        tools:layout_editor_absoluteY="289dp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_margin="4dp"
-                        android:background="@android:color/darker_gray" />
-
-
-                    <android.support.constraint.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="4dp">
-
-                        <TextView
-                            android:id="@+id/view_neighbour_location"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_margin="5dp"
-                            android:gravity="center_vertical"
-                            android:text="Localisation"
-                            android:textColor="#000000"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toEndOf="@+id/view_neighbour_location_icon"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.0" />
-
-                        <ImageView
-                            android:id="@+id/view_neighbour_location_icon"
-                            android:layout_width="39dp"
-                            android:layout_height="37dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.008"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.0"
-                            app:srcCompat="@drawable/ic_baseline_pin_drop_24" />
-                    </android.support.constraint.ConstraintLayout>
-
-                    <android.support.constraint.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp">
-
-                        <TextView
-                            android:id="@+id/view_neighbour_phone"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_margin="5dp"
-                            android:gravity="center_vertical"
-                            android:text="Phone"
-                            android:textColor="#000000"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toEndOf="@+id/view_neighbour_phone_icon"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.0" />
-
-                        <ImageView
-                            android:id="@+id/view_neighbour_phone_icon"
-                            android:layout_width="39dp"
-                            android:layout_height="37dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.008"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.0"
-                            app:srcCompat="@drawable/ic_baseline_local_phone_24" />
-
-                    </android.support.constraint.ConstraintLayout>
-
-                    <android.support.constraint.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="4dp">
-
-                        <TextView
-                            android:id="@+id/view_neighbour_social"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_margin="5dp"
-                            android:gravity="center_vertical"
-                            android:text="Social"
-                            android:textColor="#000000"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/view_neighbour_social_icon"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:id="@+id/view_neighbour_social_icon"
-                            android:layout_width="39dp"
-                            android:layout_height="37dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.008"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.0"
-                            app:srcCompat="@drawable/ic_round_public_24" />
-
-                    </android.support.constraint.ConstraintLayout>
-
-
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
-
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="10dp"
-                android:padding="32sp"
-                app:cardElevation="15dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView">
-
-                <LinearLayout
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="16sp"
-                    android:orientation="vertical">
+                    android:layout_height="1dp"
+                    android:layout_margin="4dp"
+                    android:background="@android:color/darker_gray" />
 
-                    <TextView
-                        android:id="@+id/view_about_me_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="A propos de moi"
-                        android:textColor="#000000"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/view_neighbour_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:drawableStart="@drawable/ic_baseline_pin_drop_24"
+                    android:drawablePadding="20dp"
+                    android:gravity="center_vertical"
+                    android:text="Localisation"
+                    android:textColor="@color/lighter_black"
+                    android:textSize="14sp"
+                   />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_margin="4dp"
-                        android:layout_marginBottom="12dp"
-                        android:background="@android:color/darker_gray" />
+                <TextView
+                    android:id="@+id/view_neighbour_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:drawableStart="@drawable/ic_baseline_local_phone_24"
+                    android:drawablePadding="20dp"
+                    android:gravity="center_vertical"
+                    android:text="Phone"
+                    android:textColor="@color/lighter_black"
+                    android:textSize="14sp" />
 
-                    <TextView
-                        android:id="@+id/view_about_me_content"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in dolor et libero sagittis eleifend vel id tellus. Ut sodales dui lacus, eu mattis odio tincidunt ut. Duis in sodales diam. Phasellus ut massa ac enim pulvinar lobortis eu ut ante. Sed nec pulvinar turpis. Nulla ullamcorper tortor at imperdiet sodales."
-                        android:textColor="#000000"
-                        android:textSize="12sp" />
+                <TextView
+                    android:id="@+id/view_neighbour_social"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center_vertical"
+                    android:text="Social"
+                    android:textColor="@color/lighter_black"
+                    android:textSize="14sp"
+                    android:drawableStart="@drawable/ic_round_public_24"
+                    android:drawablePadding="20dp"/>
 
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-        </android.support.constraint.ConstraintLayout>
-    </android.support.v4.widget.NestedScrollView>
-</android.support.constraint.ConstraintLayout>
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="10dp"
+            android:padding="32sp"
+            app:cardElevation="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView"
+            app:cardCornerRadius="7dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="16sp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/view_about_me_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/about_me"
+                    android:textColor="@color/neigh_title"
+                    android:textSize="30sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="4dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="@android:color/darker_gray" />
+
+                <TextView
+                    android:id="@+id/view_about_me_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in dolor et libero sagittis eleifend vel id tellus. Ut sodales dui lacus, eu mattis odio tincidunt ut. Duis in sodales diam. Phasellus ut massa ac enim pulvinar lobortis eu ut ante. Sed nec pulvinar turpis. Nulla ullamcorper tortor at imperdiet sodales."
+                    android:textColor="@color/lighter_black"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </android.support.constraint.ConstraintLayout>
+</android.support.v4.widget.NestedScrollView>
