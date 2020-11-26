@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.openclassrooms.entrevoisins.R;
@@ -48,6 +49,7 @@ public class ViewNeighbourActivity extends AppCompatActivity {
 				.load(mNeighbour.getAvatarUrl())
 				.into(mImageViewAvatar);
 
+		mFloatingActionButtonAddFavorite.setImageResource(mNeighbour.getIsFavorite() ? R.drawable.ic_star_fav : R.drawable.ic_outline_star_border_24);
 		mTextViewName1.setText(mNeighbour.getName());
 		mTextViewName2.setText(mNeighbour.getName());
 		mTextViewLocation.setText(mNeighbour.getAddress());
@@ -56,7 +58,10 @@ public class ViewNeighbourActivity extends AppCompatActivity {
 		mTextViewAboutMeContent.setText(mNeighbour.getAboutMe());
 
 		mFloatingActionButtonAddFavorite.setOnClickListener(v -> {
-			
+			boolean isFav = mNeighbour.getIsFavorite();
+			Toast.makeText(getBaseContext(), isFav ? "Removed from Favorite" : "Added to Favorite", Toast.LENGTH_SHORT).show();
+			mFloatingActionButtonAddFavorite.setImageResource(isFav ? R.drawable.ic_outline_star_border_24 : R.drawable.ic_star_fav);
+			mNeighbour.setIsFavorite(!isFav);
 		});
 
 	}
