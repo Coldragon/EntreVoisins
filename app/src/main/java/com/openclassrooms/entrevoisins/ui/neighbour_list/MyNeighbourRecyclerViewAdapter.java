@@ -27,6 +27,7 @@ import butterknife.ButterKnife;
 public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder> {
 
     private final List<Neighbour> mNeighbours;
+
     public MyNeighbourRecyclerViewAdapter(List<Neighbour> items) {
         mNeighbours = items;
     }
@@ -41,25 +42,25 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Neighbour neighbour = mNeighbours.get(position);
-        holder.mNeighbourName.setText(neighbour.getName());
-        Glide.with(holder.mNeighbourAvatar.getContext())
-                .load(neighbour.getAvatarUrl())
-                .apply(RequestOptions.circleCropTransform())
-                .into(holder.mNeighbourAvatar);
 
-        holder.itemView.setOnClickListener(v -> {
-            Context context = v.getContext();
-            Intent viewNeighbour = new Intent(context, ViewNeighbourActivity.class);
-            viewNeighbour.putExtra("Neighbour", neighbour);
-            context.startActivity(viewNeighbour);
-        });
+            holder.mNeighbourName.setText(neighbour.getName());
+            Glide.with(holder.mNeighbourAvatar.getContext())
+                    .load(neighbour.getAvatarUrl())
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(holder.mNeighbourAvatar);
 
-        holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
-            }
-        });
+            holder.itemView.setOnClickListener(v -> {
+                Context context = v.getContext();
+                Intent viewNeighbour = new Intent(context, ViewNeighbourActivity.class);
+                viewNeighbour.putExtra("Neighbour", neighbour);
+                context.startActivity(viewNeighbour);
+            });
+            holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
+                }
+            });
     }
 
     @Override

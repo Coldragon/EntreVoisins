@@ -3,6 +3,8 @@ package com.openclassrooms.entrevoisins.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.openclassrooms.entrevoisins.di.DI;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -29,8 +31,6 @@ public class Neighbour implements Parcelable {
     /** About me */
     private String aboutMe;
 
-    private boolean isFavorite;
-
     /**
      * Constructor
      * @param id
@@ -45,7 +45,6 @@ public class Neighbour implements Parcelable {
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.aboutMe = aboutMe;
-        this.isFavorite = false;
     }
 
     protected Neighbour(Parcel in) {
@@ -55,7 +54,6 @@ public class Neighbour implements Parcelable {
         address = in.readString();
         phoneNumber = in.readString();
         aboutMe = in.readString();
-        isFavorite = in.readByte() != 0;
     }
 
     @Override
@@ -66,7 +64,6 @@ public class Neighbour implements Parcelable {
         dest.writeString(address);
         dest.writeString(phoneNumber);
         dest.writeString(aboutMe);
-        dest.writeByte((byte) (isFavorite ? 1 : 0));
     }
 
     @Override
@@ -134,9 +131,15 @@ public class Neighbour implements Parcelable {
         this.aboutMe = aboutMe;
     }
 
-    public boolean getIsFavorite(){return this.isFavorite;}
+    public boolean getIsFavorite(){return DI.getNeighbourApiService().getFavorites().contains(this);}
 
-    public void setIsFavorite(boolean isFavorite){this.isFavorite=isFavorite;}
+    public void setIsFavorite(boolean isFavorite){
+        if(getIsFavorite())
+            DI.getNeighbourApiService().deleteFavorite(this);
+        else
+            DI.getNeighbourApiService().addFavorite(this);
+
+    }
 
     @Override
     public boolean equals(Object o) {
