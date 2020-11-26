@@ -9,7 +9,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.service.DummyNeighbourApiService;
+import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,7 +37,8 @@ public class ViewNeighbourActivity extends AppCompatActivity {
 	@BindView(R.id.neighbour_add_fav)
 	FloatingActionButton mFloatingActionButtonAddFavorite;
 
-	Neighbour mNeighbour;
+	private Neighbour mNeighbour;
+	private NeighbourApiService mApiService;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,26 +47,36 @@ public class ViewNeighbourActivity extends AppCompatActivity {
 			getSupportActionBar().hide();
 		setContentView(R.layout.activity_view_neighbour);
 		ButterKnife.bind(this);
+
+		mApiService = DI.getNeighbourApiService();
+
+		initView();
+		initListener();
+
+	}
+
+	private void initListener() {
+		mFloatingActionButtonAddFavorite.setOnClickListener(v -> {
+			boolean isFav = mApiService.getIsFavorite(mNeighbour);
+			Toast.makeText(getBaseContext(), isFav ? "Removed from Favorite" : "Added to Favorite", Toast.LENGTH_SHORT).show();
+			mFloatingActionButtonAddFavorite.setImageResource(isFav ? R.drawable.ic_outline_star_border_24 : R.drawable.ic_star_fav);
+			mApiService.toggleIsFavorite(mNeighbour);
+		});
+	}
+
+	private void initView() {
 		mNeighbour = (Neighbour) getIntent().getParcelableExtra("Neighbour");
 
 		Glide.with(this)
 				.load(mNeighbour.getAvatarUrl())
 				.into(mImageViewAvatar);
 
-		mFloatingActionButtonAddFavorite.setImageResource(mNeighbour.getIsFavorite() ? R.drawable.ic_star_fav : R.drawable.ic_outline_star_border_24);
+		mFloatingActionButtonAddFavorite.setImageResource(mApiService.getIsFavorite(mNeighbour) ? R.drawable.ic_star_fav : R.drawable.ic_outline_star_border_24);
 		mTextViewName1.setText(mNeighbour.getName());
 		mTextViewName2.setText(mNeighbour.getName());
 		mTextViewLocation.setText(mNeighbour.getAddress());
 		mTextViewPhone.setText(mNeighbour.getPhoneNumber());
 		mTextViewSocial.setText(mNeighbour.getAvatarUrl());
 		mTextViewAboutMeContent.setText(mNeighbour.getAboutMe());
-
-		mFloatingActionButtonAddFavorite.setOnClickListener(v -> {
-			boolean isFav = mNeighbour.getIsFavorite();
-			Toast.makeText(getBaseContext(), isFav ? "Removed from Favorite" : "Added to Favorite", Toast.LENGTH_SHORT).show();
-			mFloatingActionButtonAddFavorite.setImageResource(isFav ? R.drawable.ic_outline_star_border_24 : R.drawable.ic_star_fav);
-			mNeighbour.setIsFavorite(!isFav);
-		});
-
 	}
 }

@@ -25,16 +25,15 @@ import java.util.List;
 public class NeighbourFragment extends Fragment {
 
     private NeighbourApiService mApiService;
-    private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
-    private boolean mIsFavorite;
+    private boolean mIsFavoriteTab;
     /**
      * Create and return a new instance
      * @return @{@link NeighbourFragment}
      */
-    public static NeighbourFragment newInstance(boolean isFavorite) {
+    public static NeighbourFragment newInstance(boolean isFavoriteTab) {
         NeighbourFragment fragment = new NeighbourFragment();
-        fragment.mIsFavorite = isFavorite;
+        fragment.mIsFavoriteTab = isFavoriteTab;
         return fragment;
     }
 
@@ -59,11 +58,10 @@ public class NeighbourFragment extends Fragment {
      * Init the List of neighbours
      */
     private void initList() {
-        mNeighbours = mApiService.getNeighbours();
-        if(!mIsFavorite)
-            mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours));
+        if(!mIsFavoriteTab)
+            mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mApiService.getNeighbours()));
         else
-            mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(DI.getNeighbourApiService().getFavorites()));
+            mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mApiService.getFavorites()));
     }
 
     @Override
@@ -91,6 +89,7 @@ public class NeighbourFragment extends Fragment {
     @Subscribe
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
         mApiService.deleteNeighbour(event.neighbour);
+        mApiService.deleteFavorite(event.neighbour);
         initList();
     }
 }

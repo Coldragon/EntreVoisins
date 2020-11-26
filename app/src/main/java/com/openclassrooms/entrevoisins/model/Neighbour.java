@@ -31,6 +31,12 @@ public class Neighbour implements Parcelable {
     /** About me */
     private String aboutMe;
 
+
+    public Neighbour()
+    {
+
+    }
+
     /**
      * Constructor
      * @param id
@@ -129,16 +135,6 @@ public class Neighbour implements Parcelable {
 
     public void setAboutMe(String aboutMe) {
         this.aboutMe = aboutMe;
-    }
-
-    public boolean getIsFavorite(){return DI.getNeighbourApiService().getFavorites().contains(this);}
-
-    public void setIsFavorite(boolean isFavorite){
-        if(getIsFavorite())
-            DI.getNeighbourApiService().deleteFavorite(this);
-        else
-            DI.getNeighbourApiService().addFavorite(this);
-
     }
 
     @Override

@@ -42,4 +42,8 @@ public interface NeighbourApiService {
      * @param neighbour
      */
     void addFavorite(Neighbour neighbour);
+
+    boolean getIsFavorite(Neighbour neighbour);
+
+    void toggleIsFavorite(Neighbour neighbour);
 }

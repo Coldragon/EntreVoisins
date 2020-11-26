@@ -3,6 +3,7 @@ package com.openclassrooms.entrevoisins.service;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
+import org.hamcrest.collection.IsEmptyCollection;
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Unit test on Neighbour service
@@ -39,5 +41,25 @@ public class NeighbourServiceTest {
         Neighbour neighbourToDelete = service.getNeighbours().get(0);
         service.deleteNeighbour(neighbourToDelete);
         assertFalse(service.getNeighbours().contains(neighbourToDelete));
+    }
+
+    @Test
+    public void addFavoritesWithSuccess() {
+        List<Neighbour> favorites = service.getFavorites();
+        Neighbour testNeighbour = service.getNeighbours().get(0);;
+        assertTrue(favorites.isEmpty());
+        service.addFavorite(testNeighbour);
+        assertFalse(favorites.isEmpty());
+    }
+
+    @Test
+    public void deleteFavoritesWithSuccess() {
+        List<Neighbour> favorites = service.getFavorites();
+        Neighbour testNeighbour = service.getNeighbours().get(0);
+        assertTrue(favorites.isEmpty());
+        service.addFavorite(testNeighbour);
+        assertFalse(favorites.isEmpty());
+        service.deleteFavorite(testNeighbour);
+        assertTrue(favorites.isEmpty());
     }
 }
