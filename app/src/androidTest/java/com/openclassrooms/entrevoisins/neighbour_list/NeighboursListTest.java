@@ -74,8 +74,33 @@ public class NeighboursListTest {
         // Then : the number of element is 11
         onView(matcher).check(withItemCount(ITEMS_COUNT-1));
     }
-}
 
-// Test click on list equal the good neigh
-// Ajouter voisin et voir si il est bien dans la liste
-// Retirer voisin et voir si il est retirer face
+    /**
+     * Test click sur un item envois bon neigh
+     */
+    @Test
+    public void myNeighboursList_openGoodNeighView() {
+        Matcher matcher = allOf(withId(R.id.list_neighbours), isDisplayed());
+
+    }
+
+    /**
+     * Ajouter un nouveau voisin aux favoris et verifier qu'il est dans la
+     * liste des favoris
+     */
+    @Test
+    public void myNeighboursList_addNeighborFavorite() {
+
+
+    }
+
+    /**
+     * Supprimer un voisin des favoris et verifier qu'il est dans la
+     * bien absent
+     */
+    @Test
+    public void myNeighboursList_removeNeighborFavorite() {
+
+
+    }
+}
