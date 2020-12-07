@@ -31,12 +31,6 @@ public class Neighbour implements Parcelable {
     /** About me */
     private String aboutMe;
 
-
-    public Neighbour()
-    {
-
-    }
-
     /**
      * Constructor
      * @param id

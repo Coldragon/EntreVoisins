@@ -3,6 +3,7 @@ package com.openclassrooms.entrevoisins.ui.neighbour_list;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +37,8 @@ public class ViewNeighbourActivity extends AppCompatActivity {
 	TextView mTextViewAboutMeContent;
 	@BindView(R.id.neighbour_add_fav)
 	FloatingActionButton mFloatingActionButtonAddFavorite;
+	@BindView(R.id.backbutton)
+	ImageButton mImageButtonBack;
 
 	private Neighbour mNeighbour;
 	private NeighbourApiService mApiService;
@@ -43,8 +46,6 @@ public class ViewNeighbourActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (getSupportActionBar() != null)
-			getSupportActionBar().hide();
 		setContentView(R.layout.activity_view_neighbour);
 		ButterKnife.bind(this);
 
@@ -61,6 +62,10 @@ public class ViewNeighbourActivity extends AppCompatActivity {
 			Toast.makeText(getBaseContext(), isFav ? "Removed from Favorite" : "Added to Favorite", Toast.LENGTH_SHORT).show();
 			mFloatingActionButtonAddFavorite.setImageResource(isFav ? R.drawable.ic_outline_star_border_24 : R.drawable.ic_star_fav);
 			mApiService.toggleIsFavorite(mNeighbour);
+		});
+
+		mImageButtonBack.setOnClickListener(v -> {
+			finish();
 		});
 	}
 

@@ -120,4 +120,6 @@ public class NeighboursListTest {
         onView(allOf(withId(R.id.list_neighbours), isDisplayed())).perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
         onView(allOf(withId(R.id.view_neighbour_name2), isDisplayed())).check(matches(withText("Jack")));
     }
+
+
 }
