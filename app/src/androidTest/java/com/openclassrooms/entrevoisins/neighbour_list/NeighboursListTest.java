@@ -16,13 +16,20 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import android.support.test.espresso.matcher.ViewMatchers;
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.pressBack;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.contrib.ViewPagerActions.scrollLeft;
 import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
 import static android.support.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.contrib.ViewPagerActions.scrollRight;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.openclassrooms.entrevoisins.utils.RecyclerViewItemCountAssertion.withItemCount;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.AllOf.allOf;
 import static org.hamcrest.core.IsNull.notNullValue;
 
@@ -72,16 +79,35 @@ public class NeighboursListTest {
         onView(matcher)
                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, new DeleteViewAction()));
         // Then : the number of element is 11
-        onView(matcher).check(withItemCount(ITEMS_COUNT-1));
+        onView(matcher).check(withItemCount(ITEMS_COUNT - 1));
+    }
+
+    // Ajout
+
+    /**
+     * Test si la liste est vide
+     */
+    @Test
+    public void myNeighboursList_FavoriteListEmpty() {
+        onView(allOf(withId(R.id.container), isDisplayed())).perform(scrollRight());
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(0));
     }
 
     /**
-     * Test click sur un item envois bon neigh
+     * Test si la liste n'est pas vide
      */
     @Test
-    public void myNeighboursList_openGoodNeighView() {
-        Matcher matcher = allOf(withId(R.id.list_neighbours), isDisplayed());
+    public void myNeighboursList_FavoriteListNotEmpty() {
+        // Click sur l'objet 6, puis le bouton de favoris et ensuite retourne sur la liste des voisins
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).perform(RecyclerViewActions.actionOnItemAtPosition(5, click()));
+        onView(allOf(withId(R.id.neighbour_add_fav), isDisplayed())).perform(click());
+        pressBack();
 
+        // Check item count on second list
+        onView(allOf(withId(R.id.container), isDisplayed())).perform(scrollRight());
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(not(0)));
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(allOf(withId(R.id.neighbour_add_fav), isDisplayed())).perform(click());
     }
 
     /**
@@ -89,18 +115,9 @@ public class NeighboursListTest {
      * liste des favoris
      */
     @Test
-    public void myNeighboursList_addNeighborFavorite() {
-
-
-    }
-
-    /**
-     * Supprimer un voisin des favoris et verifier qu'il est dans la
-     * bien absent
-     */
-    @Test
-    public void myNeighboursList_removeNeighborFavorite() {
-
-
+    public void myNeighboursList_checkNeighbInDetail() {
+        // Click sur l'objet 4, puis le bouton de favoris et ensuite retourne sur la liste des voisins
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
+        onView(allOf(withId(R.id.view_neighbour_name2), isDisplayed())).check(matches(withText("Jack")));
     }
 }
