@@ -116,7 +116,7 @@ public class NeighboursListTest {
      */
     @Test
     public void myNeighboursList_checkNeighbInDetail() {
-        // Click sur l'objet 4, puis le bouton de favoris et ensuite retourne sur la liste des voisins
+        // Click sur l'objet 1, puis le bouton de favoris et ensuite retourne sur la liste des voisins
         onView(allOf(withId(R.id.list_neighbours), isDisplayed())).perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
         onView(allOf(withId(R.id.view_neighbour_name2), isDisplayed())).check(matches(withText("Jack")));
     }

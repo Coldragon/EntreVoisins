@@ -7,7 +7,7 @@ Pour tester cette application il faudra :
 	- Android Studio avec le SDK Android 28 et Java 8. 
 	- Une image d'android pour la machine virtuelle ou un téléphone physique (avec les fonctionnalité developpeur activé et un cable USB)
 
-Télécharger la branche `main` sur le repo de l'application, directement via le site de Github ou avec git en le clonant avec  `git clonehttps://github.com/Coldragon/EntreVoisins`
+Télécharger la branche `main` sur le repo de l'application, directement via le site de Github ou avec git en le clonant avec  `git clone https://github.com/Coldragon/EntreVoisins`
 
 Avec Android Studio ouvrez le dossier de l'application que vous venez de cloner, Android Studio ce chargera de lires les different fichier pour ouvrir le projet (fichiers gradles, manifest etc...)
 

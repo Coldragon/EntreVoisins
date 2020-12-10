@@ -3,7 +3,7 @@
     <color name="colorPrimary">#03A9F4</color>
     <color name="colorPrimaryDark">#0287c3</color>
     <color name="colorAccent">#FF80AB</color>
-    <color name="bg_neighbour_view">#E4E3E3</color>
+    <color name="bg_neighbour_view">#E2E5E4</color>
     <color name="light_gray">#F4F4F4</color>
     <color name="lighter_black">#757575</color>
     <color name="neigh_title">#424242</color>

@@ -27,8 +27,10 @@ public class NeighbourFragment extends Fragment {
     private NeighbourApiService mApiService;
     private RecyclerView mRecyclerView;
     private boolean mIsFavoriteTab;
+
     /**
      * Create and return a new instance
+     *
      * @return @{@link NeighbourFragment}
      */
     public static NeighbourFragment newInstance(boolean isFavoriteTab) {
@@ -58,10 +60,8 @@ public class NeighbourFragment extends Fragment {
      * Init the List of neighbours
      */
     private void initList() {
-        if(!mIsFavoriteTab)
-            mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mApiService.getNeighbours()));
-        else
-            mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mApiService.getFavorites()));
+        List<Neighbour> list = mIsFavoriteTab ? mApiService.getFavorites() : mApiService.getNeighbours();
+        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(list));
     }
 
     @Override
@@ -84,6 +84,7 @@ public class NeighbourFragment extends Fragment {
 
     /**
      * Fired if the user clicks on a delete button
+     *
      * @param event
      */
     @Subscribe
