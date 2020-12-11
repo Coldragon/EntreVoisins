@@ -49,7 +49,7 @@ public class NeighbourServiceTest {
         Neighbour testNeighbour = service.getNeighbours().get(0);;
         assertTrue(favorites.isEmpty());
         service.addFavorite(testNeighbour);
-        assertFalse(favorites.isEmpty());
+        assertTrue(favorites.contains(testNeighbour));
     }
 
     @Test
@@ -60,6 +60,12 @@ public class NeighbourServiceTest {
         service.addFavorite(testNeighbour);
         assertFalse(favorites.isEmpty());
         service.deleteFavorite(testNeighbour);
+        assertFalse(favorites.contains(testNeighbour));
+    }
+    
+    @Test
+    public void getFavoritesWithSuccess() {
+        List<Neighbour> favorites = service.getFavorites();
         assertTrue(favorites.isEmpty());
     }
 }

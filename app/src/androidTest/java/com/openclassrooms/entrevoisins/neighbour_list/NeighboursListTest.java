@@ -7,6 +7,9 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.di.DI;
+import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 import com.openclassrooms.entrevoisins.ui.neighbour_list.ListNeighbourActivity;
 import com.openclassrooms.entrevoisins.utils.DeleteViewAction;
 
@@ -17,6 +20,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import android.support.test.espresso.matcher.ViewMatchers;
+import android.support.v7.widget.RecyclerView;
+
+import java.util.List;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -29,10 +36,11 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.contrib.ViewPagerActions.scrollRight;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.openclassrooms.entrevoisins.utils.RecyclerViewItemCountAssertion.withItemCount;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.AllOf.allOf;
 import static org.hamcrest.core.IsNull.notNullValue;
-
 
 
 /**
@@ -45,16 +53,61 @@ public class NeighboursListTest {
     private static int ITEMS_COUNT = 12;
 
     private ListNeighbourActivity mActivity;
-
+    private NeighbourApiService mApiService;
     @Rule
     public ActivityTestRule<ListNeighbourActivity> mActivityRule =
             new ActivityTestRule(ListNeighbourActivity.class);
 
+
+    /**
+     * @return return le premier voisin qui n'est pas favoris
+     */
+    private Neighbour getFirstNeighbourNotInFavorites() {
+        List<Neighbour> neighbourList = mApiService.getNeighbours();
+        Neighbour notInFavorites = null;
+
+        for (Neighbour neighbour : neighbourList) {
+            if (!mApiService.getIsFavorite(neighbour)) {
+                notInFavorites = neighbour;
+                break;
+            }
+        }
+
+        if (notInFavorites == null) {
+            notInFavorites = neighbourList.get(0);
+            mApiService.toggleIsFavorite(notInFavorites);
+        }
+
+        return notInFavorites;
+    }
+
+    /**
+     * @return return le premier voisin qui est favoris
+     */
+    private Neighbour getFirstNeighbourInFavorites() {
+        List<Neighbour> neighbourList = mApiService.getNeighbours();
+        Neighbour inFavorites = null;
+        for (Neighbour neighbour : neighbourList) {
+            if (mApiService.getIsFavorite(neighbour)) {
+                inFavorites = neighbour;
+                break;
+            }
+        }
+        if (inFavorites == null) {
+            inFavorites = neighbourList.get(0);
+            mApiService.toggleIsFavorite(inFavorites);
+        }
+        return inFavorites;
+    }
+
     @Before
     public void setUp() {
         mActivity = mActivityRule.getActivity();
+        mApiService = DI.getNeighbourApiService();
         assertThat(mActivity, notNullValue());
+        assertThat(mApiService, notNullValue());
     }
+
 
     /**
      * We ensure that our recyclerview is displaying at least on item
@@ -82,44 +135,53 @@ public class NeighboursListTest {
         onView(matcher).check(withItemCount(ITEMS_COUNT - 1));
     }
 
-    // Ajout
+    // --------------------------------------- //
 
     /**
-     * Test si la liste est vide
+     * Verifie que le bons voisin a été ouvert dans les details
      */
     @Test
-    public void myNeighboursList_FavoriteListEmpty() {
-        onView(allOf(withId(R.id.container), isDisplayed())).perform(scrollRight());
-        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(0));
+    public void myNeighboursList_openGoodNeighbourFromList() {
+        Neighbour neighbour = mApiService.getNeighbours().get(0);
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(allOf(withId(R.id.view_neighbour_name2), isDisplayed())).check(matches(withText(neighbour.getName())));
     }
 
     /**
-     * Test si la liste n'est pas vide
+     * Test si favoris bien ajouté
      */
     @Test
-    public void myNeighboursList_FavoriteListNotEmpty() {
-        // Click sur l'objet 6, puis le bouton de favoris et ensuite retourne sur la liste des voisins
-        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).perform(RecyclerViewActions.actionOnItemAtPosition(5, click()));
+    public void myNeighboursList_addFavorite() {
+        int itemCountBefore = mApiService.getFavorites().size();
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).perform(RecyclerViewActions.actionOnItemAtPosition(mApiService.getNeighbours().indexOf(getFirstNeighbourNotInFavorites()), click()));
         onView(allOf(withId(R.id.neighbour_add_fav), isDisplayed())).perform(click());
         pressBack();
 
-        // Check item count on second list
         onView(allOf(withId(R.id.container), isDisplayed())).perform(scrollRight());
-        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(not(0)));
-        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        onView(allOf(withId(R.id.neighbour_add_fav), isDisplayed())).perform(click());
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(greaterThan(itemCountBefore)));
     }
 
     /**
-     * Ajouter un nouveau voisin aux favoris et verifier qu'il est dans la
-     * liste des favoris
+     * Test si favoris bien supprimer
      */
     @Test
-    public void myNeighboursList_checkNeighbInDetail() {
-        // Click sur l'objet 1, puis le bouton de favoris et ensuite retourne sur la liste des voisins
-        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
-        onView(allOf(withId(R.id.view_neighbour_name2), isDisplayed())).check(matches(withText("Jack")));
+    public void myNeighboursList_removeFavorite() {
+        int itemCountBefore = mApiService.getNeighbours().size();
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).perform(RecyclerViewActions.actionOnItemAtPosition(mApiService.getNeighbours().indexOf(getFirstNeighbourInFavorites()), click()));
+        onView(allOf(withId(R.id.neighbour_add_fav), isDisplayed())).perform(click());
+        pressBack();
+
+        onView(allOf(withId(R.id.container), isDisplayed())).perform(scrollRight());
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(lessThan(itemCountBefore)));
     }
 
-
+    /**
+     * Test si liste afficher correspond bien
+     */
+    @Test
+    public void myNeighboursList_favoriteListDisplayed() {
+        int itemCountBefore = mApiService.getFavorites().size();
+        onView(allOf(withId(R.id.container), isDisplayed())).perform(scrollRight());
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(itemCountBefore));
+    }
 }

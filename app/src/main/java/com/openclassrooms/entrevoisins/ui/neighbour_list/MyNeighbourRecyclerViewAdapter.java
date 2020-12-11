@@ -55,6 +55,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 viewNeighbour.putExtra("Neighbour", neighbour);
                 context.startActivity(viewNeighbour);
             });
+
             holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -3,6 +3,7 @@ package com.openclassrooms.entrevoisins.service;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
